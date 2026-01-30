@@ -3,7 +3,7 @@ if exists("b:current_syntax")
 endif
 
 " Comments
-syn region qCommentBlock start="^/\s*$" end="^\\\\\s*$" 
+syn region qCommentBlock start="^/\s*$" end="^\\\\\s*$"
 " Block comment from \ to end of file
 syn region qCommentBlockEOF start="^\\\\\s*$" end="\%$"
 
@@ -74,22 +74,22 @@ syn match qHttpFunc "\.h\.\(br\|c[01]\|cd\|code\|d\|ed\|edsn\|fram\|h[abcenprt]\
 syn match qFileFunc "\<[012]:\>"
 syn match qInternalFunc "\-\([1-9]\|1[0-689]\|2[0-79]\|3[01368]\|120\)!"
 
-" Keywords - Operators (as keywords, not generic functions)
-syn keyword qOperator abs acos all and any asc asin asof atan attr avg avgs
-syn keyword qOperator bin binr ceiling cols cor cos count cov cross csv cut
-syn keyword qOperator deltas desc dev differ distinct div dsave each ema enlist
-syn keyword qOperator eval except exec exit exp fills first fkeys flip floor
-syn keyword qOperator get getenv group gtime hclose hcount hdel hopen hsym
-syn keyword qOperator iasc idesc in inter inv key keys last like load log
-syn keyword qOperator lower lsq ltime ltrim mavg max maxs mcount md5 mdev med
-syn keyword qOperator meta min mins mmax mmin mmu mod msum neg next not null
-syn keyword qOperator or over parse peach pj prd prds prev prior rand rank
-syn keyword qOperator ratios raze read0 read1 reciprocal reval reverse rload
-syn keyword qOperator rotate rsave rtrim save scan scov sdev set setenv show
-syn keyword qOperator signum sin sqrt ss ssr string sublist sum sums sv svar
-syn keyword qOperator system tables tan til trim type ungroup union upper value
-syn keyword qOperator var view views vs wavg within wsum xasc xbar xcol xcols
-syn keyword qOperator xdesc xexp xgroup xkey xlog xprev xrank
+" Reserved function names - MUST come before qOperator to take precedence
+syn keyword qReserved abs acos all and any asc asin asof atan attr avg avgs
+syn keyword qReserved bin binr ceiling cols cor cos count cov cross csv cut
+syn keyword qReserved deltas desc dev differ distinct div dsave each ema enlist
+syn keyword qReserved eval except exec exit exp fills first fkeys flip floor
+syn keyword qReserved get getenv group gtime hclose hcount hdel hopen hsym
+syn keyword qReserved iasc idesc in inter inv key keys last like load log
+syn keyword qReserved lower lsq ltime ltrim mavg max maxs mcount md5 mdev med
+syn keyword qReserved meta min mins mmax mmin mmu mod msum neg next not null
+syn keyword qReserved or over parse peach pj prd prds prev prior rand rank
+syn keyword qReserved ratios raze read0 read1 reciprocal reval reverse rload
+syn keyword qReserved rotate rsave rtrim save scan scov sdev set setenv show
+syn keyword qReserved signum sin sqrt ss ssr string sublist sum sums sv svar
+syn keyword qReserved system tables tan til trim type ungroup union upper value
+syn keyword qReserved var view views vs wavg within wsum xasc xbar xcol xcols
+syn keyword qReserved xdesc xexp xgroup xkey xlog xprev xrank
 
 " Keywords - Control structures
 syn keyword qControl do if while
@@ -101,9 +101,9 @@ syn match qControl "\$\ze\["
 syn match qAssign "::\?"
 
 " Keywords - Iterators/Adverbs
-syn match qIterator "'\{1,2}:\?" 
+syn match qIterator "'\{1,2}:\?"
 syn match qIterator "\\\\:\?"
-syn match qIterator "[^/\s]/:\?" 
+syn match qIterator "[^/\s]/:\?"
 syn match qIterator "^/:\s"
 
 " Keywords - Query operators (DML)
@@ -118,7 +118,10 @@ syn match qComparison "<>"
 " Other operators
 syn match qOtherOp "[@.$!?+\-*%|&#^,_]"
 
-" Braces and brackets - yellow
+" System commands - backslash commands (place before braces so it takes priority)
+syn match qSystemCmd "\\[a-zA-Z]\+\>"
+
+" Braces and brackets - yellow (backslash NOT included here)
 syn match qBraces "[{}\[\]()]"
 
 " User-defined namespace functions (must come BEFORE qVariable)
@@ -153,7 +156,9 @@ hi qStringInvalid ctermfg=red guifg=#F44747
 " Keywords - purple/magenta
 hi qControl ctermfg=141 guifg=#C586C0
 hi qQuery ctermfg=141 guifg=#C586C0
-hi qOperator ctermfg=75 guifg=#4EC9B0
+
+" Reserved functions - PINK
+hi qReserved ctermfg=205 guifg=#FF79C6
 
 " Functions - yellow
 hi qUtilityFunc ctermfg=221 guifg=#DCDCAA
@@ -182,10 +187,10 @@ hi qDatetime ctermfg=150 guifg=#B5CEA8
 hi qGuid ctermfg=150 guifg=#B5CEA8
 hi qSystemInfo ctermfg=75 guifg=#4FC1FF
 
-" Symbols - cyan/teal
-hi qSymbol ctermfg=80 guifg=#4EC9B0
-hi qCast ctermfg=75 guifg=#4EC9B0
-hi qAttribute ctermfg=75 guifg=#4EC9B0
+" Symbols - darker cyan/teal
+hi qSymbol ctermfg=38 guifg=#2A9D8F
+hi qCast ctermfg=38 guifg=#2A9D8F
+hi qAttribute ctermfg=38 guifg=#2A9D8F
 
 " Variables - light blue
 hi qVariable ctermfg=117 guifg=#9CDCFE
@@ -197,6 +202,7 @@ hi qComparison ctermfg=white guifg=#D4D4D4
 hi qOtherOp ctermfg=white guifg=#D4D4D4
 
 " System/Special
+hi qSystemCmd ctermfg=208 guifg=#FF8800
 hi qCmd ctermfg=magenta guifg=#C586C0
 hi qNamespace ctermfg=magenta guifg=#C586C0
 
